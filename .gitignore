@@ -1,0 +1,8 @@
+.vs/
+*.swp
+*/bin/
+*/obj/
+obj
+bin
+packages/
+Debug/
