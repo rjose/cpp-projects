@@ -1,15 +1,19 @@
 #pragma once
 
-#ifdef FORTHICLIB_EXPORTS
+#include <string>
+
 #define FORTHICLIB_API  __declspec(dllexport)
-#else
-#define FORTHICLIB_API __declspec(dllimport)
-#endif
+
+using namespace std;
 
 class FORTHICLIB_API Tokenizer
 {
 public:
+	Tokenizer(string& s) : input(s) {};
 	Tokenizer();
 	~Tokenizer();
+
+protected:
+	string input;
 };
 

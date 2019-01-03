@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../ForthicLib/Tokenizer.h"
+#include <string>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace std;
 
 namespace ForthicLibTests
 {
@@ -11,8 +13,10 @@ namespace ForthicLibTests
     public:
         TEST_METHOD(TestConstruction)
         {
-			Tokenizer tokenizer;
-			Assert::AreEqual(1, 1);
+			string input = "";
+			Tokenizer tokenizer(input);
+			Assert::IsNotNull(&tokenizer);
         }
-    };
+
+	};
 }
