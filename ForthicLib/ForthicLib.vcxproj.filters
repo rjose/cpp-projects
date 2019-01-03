@@ -11,11 +11,13 @@
     <ClCompile Include="ForthicLib.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ForthicLib.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Token.h" />
   </ItemGroup>
 </Project>

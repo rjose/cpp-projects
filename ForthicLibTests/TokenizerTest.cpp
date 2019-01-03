@@ -18,5 +18,12 @@ namespace ForthicLibTests
 			Assert::IsNotNull(&tokenizer);
         }
 
+		TEST_METHOD(TestWhitespace)
+		{
+			string input = "      ()   \t\r\n   ";
+			Tokenizer tokenizer(input);
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::EOS == tok.GetType());
+		}
 	};
 }
