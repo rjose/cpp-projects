@@ -20,6 +20,8 @@ protected:
 	// Transition functions
 	Token transition_from_START();
 	Token transition_from_COMMENT();
+	Token transition_from_START_DEFINITION();
+	Token transition_from_GATHER_DEFINITION_NAME();
 
 	unsigned int position;
 	string input;

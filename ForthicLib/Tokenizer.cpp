@@ -33,6 +33,8 @@ Token Tokenizer::transition_from_START()
 		char c = input[position++];
 		if (is_whitespace(c)) continue;
 		else if (c == '#') return transition_from_COMMENT();
+		else if (c == ':') return transition_from_START_DEFINITION();
+		else if (c == ';') return Token(TokenType::END_DEFINITION);
 		else { /* TODO: Handle more cases */ }
 	}
 	return Token(TokenType::EOS);
@@ -47,4 +49,36 @@ Token Tokenizer::transition_from_COMMENT()
 		token_string += c;
 	}
 	return Token(TokenType::COMMENT, token_string);
+}
+
+
+Token Tokenizer::transition_from_START_DEFINITION()
+{
+
+	while (position < input.length())
+	{
+
+		char c = input[position++];
+		if (is_whitespace(c)) continue;
+		else if (c == '"' || c == '\'') throw "Definition cannot start with a quote";
+		else
+		{
+			position--;
+			return transition_from_GATHER_DEFINITION_NAME();
+		}
+	}
+
+	throw "Got EOS in START_DEFINITION";
+}
+
+Token Tokenizer::transition_from_GATHER_DEFINITION_NAME()
+{
+	while (position < input.length())
+	{
+		char c = input[position++];
+		if (is_whitespace(c)) break;
+		else token_string += c;
+	}
+
+	return Token(TokenType::START_DEFINITION, token_string);
 }

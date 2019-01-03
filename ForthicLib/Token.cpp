@@ -23,3 +23,8 @@ enum class TokenType Token::GetType()
 {
 	return type;
 }
+
+string Token::GetText()
+{
+	return text;
+}

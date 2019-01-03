@@ -36,5 +36,18 @@ namespace ForthicLibTests
 			tok = tokenizer.NextToken();
 			Assert::IsTrue(TokenType::EOS == tok.GetType());
 		}
+
+		TEST_METHOD(TestStartEndDefinition)
+		{
+			string input = ": DEF1 ;";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::START_DEFINITION == tok.GetType());
+			Assert::AreEqual(string("DEF1"), tok.GetText());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::END_DEFINITION == tok.GetType());
+		}
 	};
 }
