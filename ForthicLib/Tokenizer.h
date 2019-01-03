@@ -16,7 +16,10 @@ public:
 
 protected:
 	bool is_whitespace(char c);
+
+	// Transition functions
 	Token transition_from_START();
+	Token transition_from_COMMENT();
 
 	unsigned int position;
 	string input;

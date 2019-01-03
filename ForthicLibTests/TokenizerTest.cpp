@@ -25,5 +25,16 @@ namespace ForthicLibTests
 			Token tok = tokenizer.NextToken();
 			Assert::IsTrue(TokenType::EOS == tok.GetType());
 		}
+
+		TEST_METHOD(TestComment)
+		{
+			string input = "  # This is a comment";
+			Tokenizer tokenizer(input);
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::COMMENT == tok.GetType());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::EOS == tok.GetType());
+		}
 	};
 }

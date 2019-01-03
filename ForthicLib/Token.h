@@ -5,7 +5,7 @@ using namespace std;
 
 #define FORTHICLIB_API  __declspec(dllexport)
 
-enum class TokenType { NONE, EOS };
+enum class TokenType { NONE, COMMENT, EOS };
 
 class FORTHICLIB_API Token
 {

@@ -32,8 +32,19 @@ Token Tokenizer::transition_from_START()
 	{
 		char c = input[position++];
 		if (is_whitespace(c)) continue;
+		else if (c == '#') return transition_from_COMMENT();
 		else { /* TODO: Handle more cases */ }
 	}
-	Token result(TokenType::EOS);
-	return result;
+	return Token(TokenType::EOS);
+}
+
+Token Tokenizer::transition_from_COMMENT()
+{
+	while (position < input.length())
+	{
+		char c = input[position++];
+		if (c == '\n') break;
+		token_string += c;
+	}
+	return Token(TokenType::COMMENT, token_string);
 }
