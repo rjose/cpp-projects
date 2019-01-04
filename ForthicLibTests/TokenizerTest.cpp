@@ -108,5 +108,19 @@ namespace ForthicLibTests
 			Assert::IsTrue(TokenType::STRING == tok.GetType());
 			Assert::AreEqual(string("This is a ""triple - quoted"" string!"), tok.GetText());
 		}
+
+		TEST_METHOD(TestString)
+		{
+			string input = "'Single quote' \"Double quote\"";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::STRING == tok.GetType());
+			Assert::AreEqual(string("Single quote"), tok.GetText());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::STRING == tok.GetType());
+			Assert::AreEqual(string("Double quote"), tok.GetText());
+		}
 	};
 }

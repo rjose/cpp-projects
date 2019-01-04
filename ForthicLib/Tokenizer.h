@@ -25,7 +25,9 @@ protected:
 	Token transition_from_START_DEFINITION();
 	Token transition_from_GATHER_DEFINITION_NAME();
 	Token transition_from_GATHER_MODULE();
-	Token Tokenizer::transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim);
+	Token transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim);
+	Token transition_from_GATHER_STRING(char delim);
+
 
 	unsigned int position;
 	string input;

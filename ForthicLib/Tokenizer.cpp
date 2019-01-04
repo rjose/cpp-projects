@@ -56,6 +56,10 @@ Token Tokenizer::transition_from_START()
 			position += 2;  // Skip 2nd and 3rd quote chars
 			return transition_from_GATHER_TRIPLE_QUOTE_STRING(c);
 		}
+		else if (is_quote(c))
+		{
+			return transition_from_GATHER_STRING(c);
+		}
 		else { throw "Unhandled case"; }
 	}
 	return Token(TokenType::EOS);
@@ -138,4 +142,15 @@ Token Tokenizer::transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim)
 		}
 	}
 	throw "Unterminated triple quote string";
+}
+
+Token Tokenizer::transition_from_GATHER_STRING(char delim)
+{
+	while (position < input.length())
+	{
+		char c = input[position++];
+		if (c == delim)  return Token(TokenType::STRING, token_string);
+		else             token_string += c;
+	}
+	throw "Unterminated string";
 }
