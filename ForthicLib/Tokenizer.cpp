@@ -37,6 +37,8 @@ Token Tokenizer::transition_from_START()
 		else if (c == ';') return Token(TokenType::END_DEFINITION);
 		else if (c == '[') return Token(TokenType::START_ARRAY);
 		else if (c == ']') return Token(TokenType::END_ARRAY);
+		else if (c == '{') return transition_from_GATHER_MODULE();
+		else if (c == '}') return Token(TokenType::END_MODULE);
 		else { throw "Unhandled case"; }
 	}
 	return Token(TokenType::EOS);
@@ -83,4 +85,20 @@ Token Tokenizer::transition_from_GATHER_DEFINITION_NAME()
 	}
 
 	return Token(TokenType::START_DEFINITION, token_string);
+}
+
+Token Tokenizer::transition_from_GATHER_MODULE()
+{
+	while (position < input.length())
+	{
+		char c = input[position++];
+		if (is_whitespace(c)) break;
+		else if (c == '}')
+		{
+			position--;
+			break;
+		}
+		else token_string += c;
+	}
+	return Token(TokenType::START_MODULE, token_string);
 }

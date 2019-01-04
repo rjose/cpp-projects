@@ -22,6 +22,7 @@ protected:
 	Token transition_from_COMMENT();
 	Token transition_from_START_DEFINITION();
 	Token transition_from_GATHER_DEFINITION_NAME();
+	Token transition_from_GATHER_MODULE();
 
 	unsigned int position;
 	string input;

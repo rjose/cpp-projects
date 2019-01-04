@@ -61,5 +61,18 @@ namespace ForthicLibTests
 			tok = tokenizer.NextToken();
 			Assert::IsTrue(TokenType::END_ARRAY == tok.GetType());
 		}
+
+		TEST_METHOD(TestStartEndNamedModule)
+		{
+			string input = "{html }";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::START_MODULE == tok.GetType());
+			Assert::AreEqual(string("html"), tok.GetText());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::END_MODULE == tok.GetType());
+		}
 	};
 }
