@@ -74,5 +74,39 @@ namespace ForthicLibTests
 			tok = tokenizer.NextToken();
 			Assert::IsTrue(TokenType::END_MODULE == tok.GetType());
 		}
+
+		TEST_METHOD(TestAnonymousModule)
+		{
+			string input = "{ }";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::START_MODULE == tok.GetType());
+			Assert::AreEqual(string(""), tok.GetText());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::END_MODULE == tok.GetType());
+		}
+
+		TEST_METHOD(TestIsTripleQuote)
+		{
+			Tokenizer t1(string("'''Now'''"));
+			Assert::IsTrue(t1.IsTripleQuote(0, '\''));
+			Assert::IsTrue(t1.IsTripleQuote(6, '\''));
+
+			Tokenizer t2(string("\"\"\"Now\"\"\""));
+			Assert::IsTrue(t2.IsTripleQuote(0, '"'));
+			Assert::IsTrue(t2.IsTripleQuote(6, '"'));
+		}
+
+		TEST_METHOD(TestTripleQuoteString)
+		{
+			string input = "'''This is a ""triple - quoted"" string!'''";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::STRING == tok.GetType());
+			Assert::AreEqual(string("This is a ""triple - quoted"" string!"), tok.GetText());
+		}
 	};
 }

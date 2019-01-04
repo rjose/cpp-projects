@@ -13,9 +13,11 @@ public:
 	Tokenizer(string& s);
 	~Tokenizer();
 	Token NextToken();
+	bool IsTripleQuote(int index, char c);
 
 protected:
 	bool is_whitespace(char c);
+	bool is_quote(char c);
 
 	// Transition functions
 	Token transition_from_START();
@@ -23,6 +25,7 @@ protected:
 	Token transition_from_START_DEFINITION();
 	Token transition_from_GATHER_DEFINITION_NAME();
 	Token transition_from_GATHER_MODULE();
+	Token Tokenizer::transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim);
 
 	unsigned int position;
 	string input;

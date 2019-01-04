@@ -20,6 +20,18 @@ bool Tokenizer::is_whitespace(char c)
 	return false;
 }
 
+bool Tokenizer::is_quote(char c)
+{
+	return (c == '"' || c == '\'');
+}
+
+bool Tokenizer::IsTripleQuote(int index, char c)
+{
+	if (!is_quote(c)) return false;
+	if (index + 2 >= input.length()) return false;
+	return (input[index + 1] == c && input[index + 2] == c);
+}
+
 Token Tokenizer::NextToken()
 {
 	token_string = "";
@@ -39,6 +51,11 @@ Token Tokenizer::transition_from_START()
 		else if (c == ']') return Token(TokenType::END_ARRAY);
 		else if (c == '{') return transition_from_GATHER_MODULE();
 		else if (c == '}') return Token(TokenType::END_MODULE);
+		else if (IsTripleQuote(position - 1, c))
+		{
+			position += 2;  // Skip 2nd and 3rd quote chars
+			return transition_from_GATHER_TRIPLE_QUOTE_STRING(c);
+		}
 		else { throw "Unhandled case"; }
 	}
 	return Token(TokenType::EOS);
@@ -101,4 +118,24 @@ Token Tokenizer::transition_from_GATHER_MODULE()
 		else token_string += c;
 	}
 	return Token(TokenType::START_MODULE, token_string);
+}
+
+
+Token Tokenizer::transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim)
+{
+	while (position < input.length())
+	{
+		char c = input[position];
+		if (c == delim && IsTripleQuote(position, c))
+		{
+			position += 3;
+			return Token(TokenType::STRING, token_string);
+		}
+		else
+		{
+			token_string += c;
+			position++;
+		}
+	}
+	throw "Unterminated triple quote string";
 }
