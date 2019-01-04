@@ -49,5 +49,17 @@ namespace ForthicLibTests
 			tok = tokenizer.NextToken();
 			Assert::IsTrue(TokenType::END_DEFINITION == tok.GetType());
 		}
+
+		TEST_METHOD(TestStartEndArray)
+		{
+			string input = "[ ]";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::START_ARRAY == tok.GetType());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::END_ARRAY == tok.GetType());
+		}
 	};
 }

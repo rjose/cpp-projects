@@ -35,7 +35,9 @@ Token Tokenizer::transition_from_START()
 		else if (c == '#') return transition_from_COMMENT();
 		else if (c == ':') return transition_from_START_DEFINITION();
 		else if (c == ';') return Token(TokenType::END_DEFINITION);
-		else { /* TODO: Handle more cases */ }
+		else if (c == '[') return Token(TokenType::START_ARRAY);
+		else if (c == ']') return Token(TokenType::END_ARRAY);
+		else { throw "Unhandled case"; }
 	}
 	return Token(TokenType::EOS);
 }
