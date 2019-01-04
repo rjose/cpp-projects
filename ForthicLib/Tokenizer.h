@@ -27,6 +27,7 @@ protected:
 	Token transition_from_GATHER_MODULE();
 	Token transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim);
 	Token transition_from_GATHER_STRING(char delim);
+	Token transition_from_GATHER_WORD(char first_char);
 
 
 	unsigned int position;

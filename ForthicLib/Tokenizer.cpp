@@ -60,7 +60,7 @@ Token Tokenizer::transition_from_START()
 		{
 			return transition_from_GATHER_STRING(c);
 		}
-		else { throw "Unhandled case"; }
+		else return transition_from_GATHER_WORD(c);
 	}
 	return Token(TokenType::EOS);
 }
@@ -144,6 +144,7 @@ Token Tokenizer::transition_from_GATHER_TRIPLE_QUOTE_STRING(char delim)
 	throw "Unterminated triple quote string";
 }
 
+
 Token Tokenizer::transition_from_GATHER_STRING(char delim)
 {
 	while (position < input.length())
@@ -153,4 +154,17 @@ Token Tokenizer::transition_from_GATHER_STRING(char delim)
 		else             token_string += c;
 	}
 	throw "Unterminated string";
+}
+
+
+Token Tokenizer::transition_from_GATHER_WORD(char first_char)
+{
+	token_string += first_char;
+	while (position < input.length())
+	{
+		char c = input[position++];
+		if (is_whitespace(c)) break;
+		else token_string += c;
+	}
+	return Token(TokenType::WORD, token_string);
 }

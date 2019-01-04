@@ -14,6 +14,7 @@ enum class TokenType {
 	START_MODULE,
 	END_MODULE,
 	STRING,
+	WORD,
 	EOS };
 
 class FORTHICLIB_API Token

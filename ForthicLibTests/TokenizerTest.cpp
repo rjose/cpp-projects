@@ -122,5 +122,19 @@ namespace ForthicLibTests
 			Assert::IsTrue(TokenType::STRING == tok.GetType());
 			Assert::AreEqual(string("Double quote"), tok.GetText());
 		}
+
+		TEST_METHOD(TestWord)
+		{
+			string input = "WORD1 WORD2";
+			Tokenizer tokenizer(input);
+
+			Token tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::WORD == tok.GetType());
+			Assert::AreEqual(string("WORD1"), tok.GetText());
+
+			tok = tokenizer.NextToken();
+			Assert::IsTrue(TokenType::WORD == tok.GetType());
+			Assert::AreEqual(string("WORD2"), tok.GetText());
+		}
 	};
 }
