@@ -2,8 +2,7 @@
 
 #include <string>
 #include "Token.h"
-
-#define FORTHICLIB_API  __declspec(dllexport)
+#include "Defines.h"
 
 using namespace std;
 

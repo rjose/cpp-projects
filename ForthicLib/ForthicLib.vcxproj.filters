@@ -12,6 +12,15 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="Interpreter.cpp" />
+    <ClCompile Include="StackItems\StringItem.cpp" />
+    <ClCompile Include="StackItems\StackItem.cpp" />
+    <ClCompile Include="Words\Word.cpp" />
+    <ClCompile Include="Words\PushItemWord.cpp" />
+    <ClCompile Include="StackItems\ArrayItem.cpp" />
+    <ClCompile Include="StackItems\StartArrayItem.cpp" />
+    <ClCompile Include="Words\EndArrayWord.cpp" />
+    <ClCompile Include="Modules\GlobalItemGetters.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ForthicLib.h" />
@@ -19,5 +28,15 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="Interpreter.h" />
+    <ClInclude Include="Defines.h" />
+    <ClInclude Include="StackItems\StringItem.h" />
+    <ClInclude Include="StackItems\StackItem.h" />
+    <ClInclude Include="Words\Word.h" />
+    <ClInclude Include="Words\PushItemWord.h" />
+    <ClInclude Include="StackItems\ArrayItem.h" />
+    <ClInclude Include="StackItems\StartArrayItem.h" />
+    <ClInclude Include="Words\EndArrayWord.h" />
+    <ClInclude Include="Modules\GlobalItemGetters.h" />
   </ItemGroup>
 </Project>

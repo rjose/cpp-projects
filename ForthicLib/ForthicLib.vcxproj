@@ -246,15 +246,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="ForthicLib.h" />
+    <ClInclude Include="Interpreter.h" />
+    <ClInclude Include="Modules\GlobalItemGetters.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="StackItems\ArrayItem.h" />
+    <ClInclude Include="StackItems\StackItem.h" />
+    <ClInclude Include="StackItems\StartArrayItem.h" />
+    <ClInclude Include="StackItems\StringItem.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Words\EndArrayWord.h" />
+    <ClInclude Include="Words\PushItemWord.h" />
+    <ClInclude Include="Words\Word.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ForthicLib.cpp" />
+    <ClCompile Include="Interpreter.cpp" />
+    <ClCompile Include="Modules\GlobalItemGetters.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -265,8 +277,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StackItems\ArrayItem.cpp" />
+    <ClCompile Include="StackItems\StackItem.cpp" />
+    <ClCompile Include="StackItems\StartArrayItem.cpp" />
+    <ClCompile Include="StackItems\StringItem.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="Words\EndArrayWord.cpp" />
+    <ClCompile Include="Words\PushItemWord.cpp" />
+    <ClCompile Include="Words\Word.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
