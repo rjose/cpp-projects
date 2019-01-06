@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InterpreterTest.cpp" />
+    <ClCompile Include="Moduletest.cpp" />
     <ClCompile Include="UnitTestApp.xaml.cpp">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </ClCompile>

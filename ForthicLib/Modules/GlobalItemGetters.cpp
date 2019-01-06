@@ -13,7 +13,7 @@ string FORTHICLIB_API ForthicGetString(StackItem *item)
 	}
 }
 
-vector<StackItem*> FORTHICLIB_API ForthicGetArray(StackItem *item)
+vector<shared_ptr<StackItem>> FORTHICLIB_API ForthicGetArray(StackItem *item)
 {
 	if (auto i = dynamic_cast<IGetArray*>(item))
 	{

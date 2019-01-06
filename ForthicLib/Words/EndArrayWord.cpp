@@ -17,15 +17,15 @@ EndArrayWord::~EndArrayWord()
 
 void EndArrayWord::Execute(Interpreter *interp)
 {
-	vector<StackItem*> result;
+	vector<shared_ptr<StackItem>> result;
 
 	while (true)
 	{
 		auto item = interp->StackPop();
-		if (dynamic_cast<StartArrayItem*>(item)) break;
+		if (dynamic_cast<StartArrayItem*>(item.get())) break;
 		else result.push_back(item);
 	}
 
 	std::reverse(result.begin(), result.end());
-	interp->StackPush(new ArrayItem(result));
+	interp->StackPush(shared_ptr<StackItem>(new ArrayItem(result)));
 }

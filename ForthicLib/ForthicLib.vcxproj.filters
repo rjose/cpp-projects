@@ -21,6 +21,7 @@
     <ClCompile Include="StackItems\StartArrayItem.cpp" />
     <ClCompile Include="Words\EndArrayWord.cpp" />
     <ClCompile Include="Modules\GlobalItemGetters.cpp" />
+    <ClCompile Include="Modules\Module.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ForthicLib.h" />
@@ -38,5 +39,6 @@
     <ClInclude Include="StackItems\StartArrayItem.h" />
     <ClInclude Include="Words\EndArrayWord.h" />
     <ClInclude Include="Modules\GlobalItemGetters.h" />
+    <ClInclude Include="Modules\Module.h" />
   </ItemGroup>
 </Project>

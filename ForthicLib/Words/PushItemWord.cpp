@@ -3,7 +3,7 @@
 #include "../Interpreter.h"
 
 
-PushItemWord::PushItemWord(string word_name, StackItem* i) : Word(word_name), item(i)
+PushItemWord::PushItemWord(string word_name, shared_ptr<StackItem> i) : Word(word_name), item(i)
 {
 }
 

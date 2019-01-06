@@ -27,14 +27,14 @@ void Interpreter::Run(string input)
 	}
 }
 
-StackItem* Interpreter::StackPop()
+shared_ptr<StackItem> Interpreter::StackPop()
 {
-	StackItem* result = param_stack.top();
+	shared_ptr<StackItem> result = param_stack.top();
 	param_stack.pop();
 	return result;
 }
 
-void Interpreter::StackPush(StackItem* item)
+void Interpreter::StackPush(shared_ptr<StackItem> item)
 {
 	param_stack.push(item);
 }
@@ -64,13 +64,13 @@ void Interpreter::handle_token(Token token)
 void Interpreter::handle_STRING(Token tok)
 {
 	StringItem* item = new StringItem(tok.GetText());
-	handle_Word(new PushItemWord("<string>", item));
+	handle_Word(new PushItemWord("<string>", shared_ptr<StackItem>(item)));
 }
 
 void Interpreter::handle_START_ARRAY(Token token)
 {
 	StartArrayItem* item = new StartArrayItem();
-	handle_Word(new PushItemWord("[", item));
+	handle_Word(new PushItemWord("[", shared_ptr<StackItem>(item)));
 }
 
 void Interpreter::handle_END_ARRAY(Token token)

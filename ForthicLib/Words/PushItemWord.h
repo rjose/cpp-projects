@@ -11,11 +11,11 @@ class Interpreter;
 class FORTHICLIB_API PushItemWord : public Word
 {
 public:
-	PushItemWord(string name, StackItem *item);
-	virtual ~PushItemWord();
-	virtual void Execute(Interpreter *interp);
+    PushItemWord(string name, shared_ptr<StackItem> item);
+    virtual ~PushItemWord();
+    virtual void Execute(Interpreter *interp);
 
 protected:
-	StackItem* item;
+    shared_ptr<StackItem> item;
 };
 

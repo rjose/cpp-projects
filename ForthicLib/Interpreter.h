@@ -16,12 +16,12 @@ public:
 	Interpreter();
 	~Interpreter();
 	void Run(string input);
-	StackItem* StackPop();
-	void StackPush(StackItem* item);
+	shared_ptr<StackItem> StackPop();
+	void StackPush(shared_ptr<StackItem> item);
 
 protected:
 	bool is_compiling;
-	stack<StackItem*> param_stack;
+	stack<shared_ptr<StackItem>> param_stack;
 
 	void handle_token(Token tok);
 	void handle_STRING(Token tok);

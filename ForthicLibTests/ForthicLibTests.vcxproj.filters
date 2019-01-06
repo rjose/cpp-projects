@@ -17,6 +17,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="TokenizerTest.cpp" />
     <ClCompile Include="InterpreterTest.cpp" />
+    <ClCompile Include="Moduletest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

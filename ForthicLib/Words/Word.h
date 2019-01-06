@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Defines.h"
+#include "../Defines.h"
 
 using namespace std;
 

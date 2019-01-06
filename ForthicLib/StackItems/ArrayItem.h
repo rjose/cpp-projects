@@ -12,10 +12,10 @@ using namespace std;
 class FORTHICLIB_API ArrayItem : public StackItem, public IGetArray
 {
 public:
-	ArrayItem(vector<StackItem*> items);
+	ArrayItem(vector<shared_ptr<StackItem>> items);
 	virtual ~ArrayItem();
-	vector<StackItem*> GetArray();
+	vector<shared_ptr<StackItem>> GetArray();
 
 protected:
-	vector<StackItem*> items;
+	vector<shared_ptr<StackItem>> items;
 };

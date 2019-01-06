@@ -14,9 +14,9 @@ public:
 
 class FORTHICLIB_API IGetArray {
 public:
-	virtual vector<StackItem*> GetArray() = 0;
+	virtual vector<shared_ptr<StackItem>> GetArray() = 0;
 };
 
 
 string FORTHICLIB_API ForthicGetString(StackItem *item);
-vector<StackItem*> FORTHICLIB_API ForthicGetArray(StackItem *item);
+vector<shared_ptr<StackItem>> FORTHICLIB_API ForthicGetArray(StackItem *item);
