@@ -24,3 +24,15 @@ vector<shared_ptr<StackItem>> FORTHICLIB_API ForthicGetArray(StackItem *item)
 		throw "Item does not implement IGetArray";
 	}
 }
+
+shared_ptr<StackItem> FORTHICLIB_API ForthicGetValue(StackItem *item)
+{
+    if (auto i = dynamic_cast<IGetValue*>(item))
+    {
+        return i->GetValue();
+    }
+    else
+    {
+        throw "Item does not implement IGetVariable";
+    }
+}

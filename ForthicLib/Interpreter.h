@@ -7,6 +7,7 @@
 #include "StackItems/StackItem.h"
 #include "Token.h"
 #include "Words/Word.h"
+#include "Modules/Module.h"
 
 using namespace std;
 
@@ -18,16 +19,26 @@ public:
 	void Run(string input);
 	shared_ptr<StackItem> StackPop();
 	void StackPush(shared_ptr<StackItem> item);
+    shared_ptr<Module> CurModule();
 
 protected:
 	bool is_compiling;
 	stack<shared_ptr<StackItem>> param_stack;
+    stack<shared_ptr<Module>> module_stack;
+    map<string, shared_ptr<Module>> registered_modules;
 
 	void handle_token(Token tok);
 	void handle_STRING(Token tok);
 	void handle_START_ARRAY(Token token);
 	void handle_END_ARRAY(Token token);
+    void handle_START_MODULE(Token tok);
+    void handle_END_MODULE(Token tok);
 
 	void handle_Word(Word *word);
+
+    shared_ptr<Module> find_module(string name);
+    void register_module(shared_ptr<Module> mod);
+
+    void module_stack_push(shared_ptr<Module> mod);
 };
 

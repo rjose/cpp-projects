@@ -12,6 +12,7 @@ class FORTHICLIB_API PushItemWord : public Word
 {
 public:
     PushItemWord(string name, shared_ptr<StackItem> item);
+    PushItemWord(string name, StackItem* item);
     virtual ~PushItemWord();
     virtual void Execute(Interpreter *interp);
 

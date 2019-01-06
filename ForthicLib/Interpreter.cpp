@@ -6,11 +6,11 @@
 #include "Words/PushItemWord.h"
 #include "Words/EndArrayWord.h"
 
-
 Interpreter::Interpreter() : is_compiling(false)
 {
+    // The first module in the module_stack is the initial local module
+    module_stack.push(shared_ptr<Module>(new Module("")));
 }
-
 
 Interpreter::~Interpreter()
 {
@@ -39,6 +39,10 @@ void Interpreter::StackPush(shared_ptr<StackItem> item)
 	param_stack.push(item);
 }
 
+shared_ptr<Module> Interpreter::CurModule()
+{
+    return module_stack.top();
+}
 
 void Interpreter::handle_token(Token token)
 {
@@ -56,7 +60,15 @@ void Interpreter::handle_token(Token token)
 		handle_STRING(token);
 		break;
 
-	default:
+    case TokenType::START_MODULE:
+        handle_START_MODULE(token);
+        break;
+
+    case TokenType::END_MODULE:
+        handle_END_MODULE(token);
+        break;
+
+    default:
 		throw "Unknown token type";
 	}
 }
@@ -65,6 +77,32 @@ void Interpreter::handle_STRING(Token tok)
 {
 	StringItem* item = new StringItem(tok.GetText());
 	handle_Word(new PushItemWord("<string>", shared_ptr<StackItem>(item)));
+}
+
+void Interpreter::handle_START_MODULE(Token tok)
+{
+    // If module has been registered, push it onto the module stack
+    if (auto mod = find_module(tok.GetText()))
+    {
+        module_stack_push(mod);
+    }
+    // If the module has no name, push an anonymous module
+    else if (tok.GetText() == "")
+    {
+        module_stack_push(shared_ptr<Module>(new Module("")));
+    }
+    // Register a new module under the specified name and push it onto the module stack
+    else
+    {
+        mod = shared_ptr<Module>(new Module(tok.GetText()));
+        register_module(mod);
+        module_stack_push(mod);
+    }
+}
+
+void Interpreter::handle_END_MODULE(Token tok)
+{
+    module_stack.pop();
 }
 
 void Interpreter::handle_START_ARRAY(Token token)
@@ -78,7 +116,6 @@ void Interpreter::handle_END_ARRAY(Token token)
 	handle_Word(new EndArrayWord("]"));
 }
 
-
 void Interpreter::handle_Word(Word *word)
 {
 	if (is_compiling)
@@ -90,4 +127,22 @@ void Interpreter::handle_Word(Word *word)
 		word->Execute(this);
 		delete word;
 	}
+}
+
+shared_ptr<Module> Interpreter::find_module(string name)
+{
+    if (registered_modules.find(name) == registered_modules.end()) return nullptr;
+    else return registered_modules[name];
+}
+
+void Interpreter::register_module(shared_ptr<Module> mod)
+{
+    Module* m = mod.get();
+    registered_modules[m->GetName()] = mod;
+    // TODO: Run module forthic
+}
+
+void Interpreter::module_stack_push(shared_ptr<Module> mod)
+{
+    module_stack.push(mod);
 }

@@ -7,6 +7,9 @@ PushItemWord::PushItemWord(string word_name, shared_ptr<StackItem> i) : Word(wor
 {
 }
 
+PushItemWord::PushItemWord(string name, StackItem* item) : PushItemWord(name, shared_ptr<StackItem>(item))
+{
+}
 
 PushItemWord::~PushItemWord()
 {

@@ -256,6 +256,7 @@
     <ClInclude Include="StackItems\StackItem.h" />
     <ClInclude Include="StackItems\StartArrayItem.h" />
     <ClInclude Include="StackItems\StringItem.h" />
+    <ClInclude Include="StackItems\VariableItem.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Tokenizer.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="StackItems\StackItem.cpp" />
     <ClCompile Include="StackItems\StartArrayItem.cpp" />
     <ClCompile Include="StackItems\StringItem.cpp" />
+    <ClCompile Include="StackItems\VariableItem.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Words\EndArrayWord.cpp" />

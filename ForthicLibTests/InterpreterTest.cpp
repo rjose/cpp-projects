@@ -47,5 +47,17 @@ namespace ForthicLibTests
             Assert::AreEqual(string("One"), ForthicGetString(items[0].get()));
             Assert::AreEqual(string("Two"), ForthicGetString(items[1].get()));
         }
+
+        TEST_METHOD(TestPushModule)
+        {
+            Interpreter interp;
+            interp.Run("{sample");
+            auto mod = interp.CurModule();
+            Assert::AreEqual(string("sample"), mod.get()->GetName());
+
+            interp.Run("}");
+            mod = interp.CurModule();
+            Assert::AreEqual(string(""), mod.get()->GetName());
+        }
     };
 }
