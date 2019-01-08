@@ -9,12 +9,14 @@
 Interpreter::Interpreter() : is_compiling(false)
 {
     // The first module in the module_stack is the initial local module
-    module_stack.push(shared_ptr<Module>(new Module("")));
+    module_stack.push_back(shared_ptr<Module>(new Module("")));
 }
+
 
 Interpreter::~Interpreter()
 {
 }
+
 
 void Interpreter::Run(string input)
 {
@@ -27,6 +29,7 @@ void Interpreter::Run(string input)
 	}
 }
 
+
 shared_ptr<StackItem> Interpreter::StackPop()
 {
 	shared_ptr<StackItem> result = param_stack.top();
@@ -34,15 +37,18 @@ shared_ptr<StackItem> Interpreter::StackPop()
 	return result;
 }
 
+
 void Interpreter::StackPush(shared_ptr<StackItem> item)
 {
 	param_stack.push(item);
 }
 
+
 shared_ptr<Module> Interpreter::CurModule()
 {
-    return module_stack.top();
+    return module_stack.back();
 }
+
 
 void Interpreter::handle_token(Token token)
 {
@@ -68,16 +74,33 @@ void Interpreter::handle_token(Token token)
         handle_END_MODULE(token);
         break;
 
+    case TokenType::START_DEFINITION:
+        handle_START_DEFINITION(token);
+        break;
+
+    case TokenType::END_DEFINITION:
+        handle_END_DEFINITION(token);
+        break;
+
+    case TokenType::COMMENT:
+        break;
+
+    case TokenType::WORD:
+        handle_WORD(token);
+        break;
+
     default:
 		throw "Unknown token type";
 	}
 }
+
 
 void Interpreter::handle_STRING(Token tok)
 {
 	StringItem* item = new StringItem(tok.GetText());
 	handle_Word(new PushItemWord("<string>", shared_ptr<StackItem>(item)));
 }
+
 
 void Interpreter::handle_START_MODULE(Token tok)
 {
@@ -100,10 +123,12 @@ void Interpreter::handle_START_MODULE(Token tok)
     }
 }
 
+
 void Interpreter::handle_END_MODULE(Token tok)
 {
-    module_stack.pop();
+    module_stack.pop_back();
 }
+
 
 void Interpreter::handle_START_ARRAY(Token token)
 {
@@ -111,29 +136,73 @@ void Interpreter::handle_START_ARRAY(Token token)
 	handle_Word(new PushItemWord("[", shared_ptr<StackItem>(item)));
 }
 
+
 void Interpreter::handle_END_ARRAY(Token token)
 {
 	handle_Word(new EndArrayWord("]"));
 }
 
-void Interpreter::handle_Word(Word *word)
+
+void Interpreter::handle_START_DEFINITION(Token tok)
 {
-	if (is_compiling)
-	{
-		// TODO: Handle compile
-	}
-	else
-	{
-		word->Execute(this);
-		delete word;
-	}
+    if (is_compiling) throw "Can't have nested definitions";
+    cur_definition = shared_ptr<DefinitionWord>(new DefinitionWord(tok.GetText()));
+    is_compiling = true;
 }
+
+
+void Interpreter::handle_END_DEFINITION(Token tok)
+{
+    if (!is_compiling) throw "Unmatched end definition";
+    CurModule().get()->AddWord(cur_definition);
+    is_compiling = false;
+}
+
+
+void Interpreter::handle_WORD(Token tok)
+{
+    shared_ptr<Word> word = find_word(tok.GetText());
+    if (word == nullptr) throw (string("Unknown word: ") + tok.GetText());
+    handle_Word(word);
+}
+
+
+shared_ptr<Word> Interpreter::find_word(string name)
+{
+    shared_ptr<Word> result = nullptr;
+
+    // Search module stack
+    for (auto iter = module_stack.rbegin(); iter != module_stack.rend(); iter++)
+    {
+        result = (*iter).get()->FindWord(name);
+        if (result != nullptr) return result;
+    }
+
+    // TODO: Treat as registered module
+
+    return result;
+}
+
+
+void Interpreter::handle_Word(shared_ptr<Word> word)
+{
+	if (is_compiling)  cur_definition.get()->CompileWord(word);
+	else  word.get()->Execute(this);
+}
+
+
+void Interpreter::handle_Word(Word* word)
+{
+    handle_Word(shared_ptr<Word>(word));
+}
+
 
 shared_ptr<Module> Interpreter::find_module(string name)
 {
     if (registered_modules.find(name) == registered_modules.end()) return nullptr;
     else return registered_modules[name];
 }
+
 
 void Interpreter::register_module(shared_ptr<Module> mod)
 {
@@ -142,7 +211,8 @@ void Interpreter::register_module(shared_ptr<Module> mod)
     // TODO: Run module forthic
 }
 
+
 void Interpreter::module_stack_push(shared_ptr<Module> mod)
 {
-    module_stack.push(mod);
+    module_stack.push_back(mod);
 }

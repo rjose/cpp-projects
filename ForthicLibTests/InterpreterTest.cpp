@@ -59,5 +59,20 @@ namespace ForthicLibTests
             mod = interp.CurModule();
             Assert::AreEqual(string(""), mod.get()->GetName());
         }
+
+        TEST_METHOD(TestCreateDefinition)
+        {
+            Interpreter interp;
+            interp.Run(": TACO 'taco' ;");
+            auto mod = interp.CurModule();
+            auto word = mod.get()->FindWord("TACO");
+            Assert::AreEqual(string("TACO"), word.get()->GetName());
+
+            // Execute definition
+            interp.Run("TACO");
+            shared_ptr<StackItem> val = interp.StackPop();
+            Assert::AreEqual(string("taco"), ForthicGetString(val.get()));
+        }
+
     };
 }
