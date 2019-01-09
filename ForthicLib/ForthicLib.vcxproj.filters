@@ -28,6 +28,7 @@
     <ClCompile Include="StackItems\ModuleItem.cpp" />
     <ClCompile Include="StackItems\FloatItem.cpp" />
     <ClCompile Include="StackItems\IntItem.cpp" />
+    <ClCompile Include="Modules\GlobalModuleWords.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ForthicLib.h" />
@@ -52,5 +53,6 @@
     <ClInclude Include="StackItems\ModuleItem.h" />
     <ClInclude Include="StackItems\FloatItem.h" />
     <ClInclude Include="StackItems\IntItem.h" />
+    <ClInclude Include="Modules\GlobalModuleWords.h" />
   </ItemGroup>
 </Project>

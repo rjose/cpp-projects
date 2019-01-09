@@ -3,9 +3,11 @@
 #include "Words/PushItemWord.h"
 #include "StackItems/FloatItem.h"
 #include "StackItems/IntItem.h"
+#include "GlobalModuleWords.h"
 
 GlobalModule::GlobalModule() : Module("Forthic.global")
 {
+    AddWord(new PopWord("POP"));
 }
 
 

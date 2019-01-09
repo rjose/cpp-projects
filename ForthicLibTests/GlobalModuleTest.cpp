@@ -40,5 +40,12 @@ namespace ForthicLibTests
             shared_ptr<StackItem> item = interp->StackPop();
             Assert::IsTrue(fabs(ForthicGetFloat(item.get()) - 27.5) < 0.01);
         }
+
+        TEST_METHOD(TestPop)
+        {
+            interp->Run("1 2 3 POP");
+            shared_ptr<StackItem> item = interp->StackPop();
+            Assert::AreEqual(2, ForthicGetInt(item.get()));
+        }
     };
 }
