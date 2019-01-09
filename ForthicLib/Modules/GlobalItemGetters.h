@@ -5,6 +5,8 @@
 #include "../Defines.h"
 #include "../StackItems/StackItem.h"
 
+class Module;
+
 using namespace std;
 
 class FORTHICLIB_API IGetString {
@@ -22,6 +24,12 @@ public:
     virtual shared_ptr<StackItem> GetValue() = 0;
 };
 
+class FORTHICLIB_API IGetModule {
+public:
+    virtual shared_ptr<Module> GetModule() = 0;
+};
+
 string FORTHICLIB_API ForthicGetString(StackItem *item);
 vector<shared_ptr<StackItem>> FORTHICLIB_API ForthicGetArray(StackItem *item);
 shared_ptr<StackItem> FORTHICLIB_API ForthicGetValue(StackItem *item);
+shared_ptr<Module> FORTHICLIB_API ForthicGetModule(StackItem *item);

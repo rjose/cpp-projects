@@ -13,6 +13,11 @@ Module::~Module()
     // TODO: Module should delete all of its words and variables
 }
 
+string Module::ForthicCode()
+{
+    return "";
+}
+
 string Module::GetName()
 {
     return name;
@@ -49,7 +54,7 @@ shared_ptr<Word> Module::find_in_words(string name)
 {
     for (auto p = words.rbegin(); p != words.rend(); p++)
     {
-        if ((*p).get()->GetName() == name) return (*p);
+        if ((*p)->GetName() == name) return (*p);
     }
     return nullptr;
 }

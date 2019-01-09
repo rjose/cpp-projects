@@ -36,3 +36,15 @@ shared_ptr<StackItem> FORTHICLIB_API ForthicGetValue(StackItem *item)
         throw "Item does not implement IGetVariable";
     }
 }
+
+shared_ptr<Module> FORTHICLIB_API ForthicGetModule(StackItem *item)
+{
+    if (auto i = dynamic_cast<IGetModule*>(item))
+    {
+        return i->GetModule();
+    }
+    else
+    {
+        throw "Item does not implement IGetModule";
+    }
+}

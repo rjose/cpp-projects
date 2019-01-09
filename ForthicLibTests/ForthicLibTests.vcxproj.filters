@@ -18,6 +18,7 @@
     <ClCompile Include="TokenizerTest.cpp" />
     <ClCompile Include="InterpreterTest.cpp" />
     <ClCompile Include="Moduletest.cpp" />
+    <ClCompile Include="GlobalModuleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

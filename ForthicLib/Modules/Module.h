@@ -18,6 +18,8 @@ public:
     Module(string name);
     virtual ~Module();
 
+    virtual string ForthicCode();
+
     string GetName();
     void AddWord(shared_ptr<Word> word);
     void AddWord(Word* word);
@@ -32,6 +34,6 @@ protected:
 
     shared_ptr<Word> find_in_words(string name);
     shared_ptr<Word> find_variable(string name);
-    shared_ptr<Word> treat_as_literal(string name);
+    virtual shared_ptr<Word> treat_as_literal(string name);
 };
 

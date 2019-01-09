@@ -53,11 +53,11 @@ namespace ForthicLibTests
             Interpreter interp;
             interp.Run("{sample");
             auto mod = interp.CurModule();
-            Assert::AreEqual(string("sample"), mod.get()->GetName());
+            Assert::AreEqual(string("sample"), mod->GetName());
 
             interp.Run("}");
             mod = interp.CurModule();
-            Assert::AreEqual(string(""), mod.get()->GetName());
+            Assert::AreEqual(string(""), mod->GetName());
         }
 
         TEST_METHOD(TestCreateDefinition)
@@ -65,8 +65,8 @@ namespace ForthicLibTests
             Interpreter interp;
             interp.Run(": TACO 'taco' ;");
             auto mod = interp.CurModule();
-            auto word = mod.get()->FindWord("TACO");
-            Assert::AreEqual(string("TACO"), word.get()->GetName());
+            auto word = mod->FindWord("TACO");
+            Assert::AreEqual(string("TACO"), word->GetName());
 
             // Execute definition
             interp.Run("TACO");

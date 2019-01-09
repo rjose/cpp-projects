@@ -24,6 +24,10 @@
     <ClCompile Include="Modules\Module.cpp" />
     <ClCompile Include="StackItems\VariableItem.cpp" />
     <ClCompile Include="Words\DefinitionWord.cpp" />
+    <ClCompile Include="Modules\GlobalModule.cpp" />
+    <ClCompile Include="StackItems\ModuleItem.cpp" />
+    <ClCompile Include="StackItems\FloatItem.cpp" />
+    <ClCompile Include="StackItems\IntItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ForthicLib.h" />
@@ -44,5 +48,9 @@
     <ClInclude Include="Modules\Module.h" />
     <ClInclude Include="StackItems\VariableItem.h" />
     <ClInclude Include="Words\DefinitionWord.h" />
+    <ClInclude Include="Modules\GlobalModule.h" />
+    <ClInclude Include="StackItems\ModuleItem.h" />
+    <ClInclude Include="StackItems\FloatItem.h" />
+    <ClInclude Include="StackItems\IntItem.h" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "StackItems/StartArrayItem.h"
 #include "Words/PushItemWord.h"
 #include "Words/EndArrayWord.h"
+#include "StackItems/ModuleItem.h"
 
 Interpreter::Interpreter() : is_compiling(false)
 {
@@ -105,16 +106,12 @@ void Interpreter::handle_STRING(Token tok)
 void Interpreter::handle_START_MODULE(Token tok)
 {
     // If module has been registered, push it onto the module stack
-    if (auto mod = find_module(tok.GetText()))
-    {
-        module_stack_push(mod);
-    }
-    // If the module has no name, push an anonymous module
-    else if (tok.GetText() == "")
-    {
-        module_stack_push(shared_ptr<Module>(new Module("")));
-    }
-    // Register a new module under the specified name and push it onto the module stack
+    if (auto mod = find_module(tok.GetText()))  module_stack_push(mod);
+
+    // Else if the module has no name, push an anonymous module
+    else if (tok.GetText() == "")  module_stack_push(shared_ptr<Module>(new Module("")));
+
+    // Else, register a new module under the specified name and push it onto the module stack
     else
     {
         mod = shared_ptr<Module>(new Module(tok.GetText()));
@@ -154,7 +151,7 @@ void Interpreter::handle_START_DEFINITION(Token tok)
 void Interpreter::handle_END_DEFINITION(Token tok)
 {
     if (!is_compiling) throw "Unmatched end definition";
-    CurModule().get()->AddWord(cur_definition);
+    CurModule()->AddWord(cur_definition);
     is_compiling = false;
 }
 
@@ -174,11 +171,15 @@ shared_ptr<Word> Interpreter::find_word(string name)
     // Search module stack
     for (auto iter = module_stack.rbegin(); iter != module_stack.rend(); iter++)
     {
-        result = (*iter).get()->FindWord(name);
-        if (result != nullptr) return result;
+        result = (*iter)->FindWord(name);
+        if (result != nullptr) break;
     }
 
-    // TODO: Treat as registered module
+    // Treat as registered module
+    if (result == nullptr)   result = find_registered_module_word(name);
+
+    // Check global module
+    if (result == nullptr)   result = global_module.FindWord(name);
 
     return result;
 }
@@ -186,8 +187,8 @@ shared_ptr<Word> Interpreter::find_word(string name)
 
 void Interpreter::handle_Word(shared_ptr<Word> word)
 {
-    if (is_compiling)  cur_definition.get()->CompileWord(word);
-    else  word.get()->Execute(this);
+    if (is_compiling)  cur_definition->CompileWord(word);
+    else word->Execute(this);
 }
 
 
@@ -203,12 +204,18 @@ shared_ptr<Module> Interpreter::find_module(string name)
     else return registered_modules[name];
 }
 
+shared_ptr<Word> Interpreter::find_registered_module_word(string name)
+{
+    auto mod = find_module(name);
+    if (mod == nullptr)  return nullptr;
+    else  return shared_ptr<Word>(new PushItemWord(mod->GetName(), new ModuleItem(mod)));
+}
+
 
 void Interpreter::register_module(shared_ptr<Module> mod)
 {
-    Module* m = mod.get();
-    registered_modules[m->GetName()] = mod;
-    // TODO: Run module forthic
+    registered_modules[mod->GetName()] = mod;
+    this->Run(mod->ForthicCode());
 }
 
 

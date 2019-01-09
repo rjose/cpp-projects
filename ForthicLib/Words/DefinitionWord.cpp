@@ -20,6 +20,6 @@ void DefinitionWord::Execute(Interpreter *interp)
 {
     for (auto iter = words.begin(); iter != words.end(); iter++)
     {
-        (*iter).get()->Execute(interp);
+        (*iter)->Execute(interp);
     }
 }

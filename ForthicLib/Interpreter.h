@@ -10,6 +10,7 @@
 #include "Words/Word.h"
 #include "Modules/Module.h"
 #include "Words/DefinitionWord.h"
+#include "Modules/GlobalModule.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ protected:
     vector<shared_ptr<Module>> module_stack;
     map<string, shared_ptr<Module>> registered_modules;
     shared_ptr<DefinitionWord> cur_definition;
+    GlobalModule global_module;
 
 	void handle_token(Token tok);
 	void handle_STRING(Token tok);
@@ -48,5 +50,6 @@ protected:
     void module_stack_push(shared_ptr<Module> mod);
 
     shared_ptr<Word> find_word(string name);
+    shared_ptr<Word> find_registered_module_word(string name);
 };
 
