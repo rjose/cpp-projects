@@ -38,14 +38,19 @@ void Module::EnsureVariable(string name)
     variables[name];
 }
 
+void Module::UseModule(shared_ptr<Module> mod)
+{
+    using_modules.push_back(mod);
+}
+
 
 shared_ptr<Word> Module::FindWord(string name)
 {
     shared_ptr<Word> result = nullptr;
-    if (result == nullptr) result = find_in_words(name);     // Find in words
-    if (result == nullptr) result = find_variable(name);     // Find varaible
-    if (result == nullptr) result = treat_as_literal(name);  // Treat as literal
-
+    if (result == nullptr) result = find_in_words(name);          // Find in words
+    if (result == nullptr) result = find_variable(name);          // Find varaible
+    if (result == nullptr) result = treat_as_literal(name);       // Treat as literal
+    if (result == nullptr) result = find_in_using_modules(name);  // Search using modules
     return result;
 }
 
@@ -69,4 +74,14 @@ shared_ptr<Word> Module::find_variable(string name)
 shared_ptr<Word> Module::treat_as_literal(string name)
 {
     return nullptr;
+}
+
+shared_ptr<Word> Module::find_in_using_modules(string name)
+{
+    shared_ptr<Word> result = nullptr;
+    for (int i = 0; i < using_modules.size(); i++) {
+        result = using_modules[i]->FindWord(name);
+        if (result != nullptr)  break;
+    }
+    return result;
 }

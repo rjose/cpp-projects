@@ -8,6 +8,7 @@
 GlobalModule::GlobalModule() : Module("Forthic.global")
 {
     AddWord(new PopWord("POP"));
+    AddWord(new UseModulesWord("USE-MODULES"));
 }
 
 

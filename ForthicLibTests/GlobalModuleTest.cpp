@@ -47,5 +47,17 @@ namespace ForthicLibTests
             shared_ptr<StackItem> item = interp->StackPop();
             Assert::AreEqual(2, ForthicGetInt(item.get()));
         }
+
+        TEST_METHOD(TestUsingModules)
+        {
+            interp->Run("{sample : HI   'Hello' ; } ");
+
+            // Verify that HI is not in the current module's scope
+            Interpreter* i = interp;
+            Assert::ExpectException<string>([i]() {i->Run("HI"); });  // [i]() {...} is a lambda expression
+
+            // If we use USE-MODULES, we can find HI
+            interp->Run("[ sample ] USE-MODULES  HI");
+        }
     };
 }
