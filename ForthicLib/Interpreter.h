@@ -23,6 +23,7 @@ public:
 	shared_ptr<StackItem> StackPop();
 	void StackPush(shared_ptr<StackItem> item);
     shared_ptr<Module> CurModule();
+    void RegisterModule(shared_ptr<Module> mod);
 
 protected:
 	bool is_compiling;
@@ -46,7 +47,6 @@ protected:
     void handle_Word(Word* word);
 
     shared_ptr<Module> find_module(string name);
-    void register_module(shared_ptr<Module> mod);
     void module_stack_push(shared_ptr<Module> mod);
 
     shared_ptr<Word> find_word(string name);

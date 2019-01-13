@@ -115,7 +115,7 @@ void Interpreter::handle_START_MODULE(Token tok)
     else
     {
         mod = shared_ptr<Module>(new Module(tok.GetText()));
-        register_module(mod);
+        RegisterModule(mod);
         module_stack_push(mod);
     }
 }
@@ -212,7 +212,7 @@ shared_ptr<Word> Interpreter::find_registered_module_word(string name)
 }
 
 
-void Interpreter::register_module(shared_ptr<Module> mod)
+void Interpreter::RegisterModule(shared_ptr<Module> mod)
 {
     registered_modules[mod->GetName()] = mod;
     this->Run(mod->ForthicCode());
