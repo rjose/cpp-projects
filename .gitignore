@@ -6,3 +6,5 @@ obj
 bin
 packages/
 Debug/
+App2/
+Direct3D/
